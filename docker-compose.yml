@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: eduflow-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-EduFlowDb}
+      POSTGRES_USER: ${POSTGRES_USER:-eduflow_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_secure_default_pass}
+    ports:
+      # Bound to localhost only to prevent direct public exposure
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - eduflow_pgdata:/var/lib/postgresql/data
+
+volumes:
+  eduflow_pgdata:
